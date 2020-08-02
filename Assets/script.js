@@ -46,3 +46,11 @@ function renderHistory(){
         forecast(searchedCity);
     });
 };
+// API. Display the city name, the date, and an icon representing the weather conditions, temperature, humidity, wind speed, and the UV index.
+function searchCity(city){
+    
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=29d9121dacef0624c94a4b33f6e86502";
+    
+$.ajax({
+    url: queryURL,
+    method: "GET"
