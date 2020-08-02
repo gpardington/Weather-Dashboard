@@ -1,0 +1,79 @@
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+h1 {
+    background-color: white;
+    color: turquoise;
+    text-align: center;
+}
+
+.header h3 {
+    text-align: center;
+/*might need some padding or margins here*/
+}
+
+#history {
+    display: block;
+}
+
+.forecast.content li{
+    font-size: 6px;
+    text-align: justify;
+}
+
+#main {
+    width: 600px;
+    height: 200px;
+    text-align: left;
+    padding-bottom: 0%;
+    margin-bottom: 5%;
+}
+
+#main h5 {
+    color: black;
+}
+
+/* Forecast box styling */
+#forecast {
+    background-color: #f1f1f1;
+}
+
+#forecast li {
+    font-size: 12px;
+}
+
+.nowrap {
+    white-space: nowrap ;
+}
+
+.square {
+    background-color: #2196F3;
+    color: #f1f1f1;
+    float:left;
+    position: relative;
+    width: 16%;
+    padding-bottom: 1%; 
+    margin:1%;
+    overflow:hidden;
+    border: 1px solid grey;
+}
+
+.square:hover {
+    background: #0b7dda;
+    cursor: pointer;
+}
+
+.square::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.content {
+    position:absolute;
+    height:85%; 
+    width:95%; 
+    padding: 1%;
+    
+}
