@@ -1,5 +1,11 @@
 body {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    background-image: url("image.jpg");
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 h1 {
@@ -10,6 +16,8 @@ h1 {
 
 .header h3 {
     text-align: center;
+    padding-left: 50px;
+   
 /*might need some padding or margins here*/
 }
 
@@ -76,4 +84,49 @@ h1 {
     width:95%; 
     padding: 1%;
     
+}
+
+/* Search and history stlye */
+* {
+    box-sizing: border-box;
+}
+  
+/* Input style */
+form.search input[type=text] {
+    padding: 5 px;
+    font-size: 14px;
+    border: 1px solid grey;
+    float: left;
+    width: 50%;
+    background: #f1f1f1;
+}
+  /* Submit button styles and effects */
+#search {
+    float: left;
+    width: 10%;
+    padding: 1px;
+    background: #2196F3;
+    color: white;
+    font-size: 14px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+  
+#search:hover {
+    background: #0b7dda;
+}
+  
+#search::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/*Footer*/
+footer {
+    background-color: rgb(41, 38, 38);
+    color: aliceblue; 
+    text-align: center;
+    font-size: smaller;
 }

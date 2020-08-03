@@ -71,6 +71,9 @@ $.ajax({
     // Displaying the date when the city is selected.
     $("#currentDate").text(dateTime);
 
+    // Declaring the function F to C
+    let cTemp = fToC(response.main.temp);
+
     // Show Temperature on main div
     tempT.text("Temperature: "+ cTemp);
 
@@ -104,10 +107,19 @@ $.ajax({
          })
     })
  };
+
+ // Function to show Farenheit to Celcious
+function fToC(fahrenheit) {
+    const fTemp = Math.round(fahrenheit);
+    const fToCel = Math.round((fTemp - 32) * 5 / 9);
+    const temp = `${fTemp}\xB0F : ${fToCel}\xB0C.`;
+    return temp;   
+};
+
 // Display the future weather conditions for the searched city and show a 5-day forecast that displays the date, an icon representation of weather conditions, wind, UV, temperature, and humidity
 function forecast(city) {
     // Section for the 5 day query
-    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=3d16044a2eba4d271046d70fd1f2c155";
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=29d9121dacef0624c94a4b33f6e86502";
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -119,3 +131,46 @@ function forecast(city) {
             return currentElement.dt_txt.includes("12:00:00")
             }	
         );
+        //console.log(filteredDays)
+        // Creating the HTML elements to display the forecast
+        $("#forecast").empty();
+        for(let i = 0; i < filteredDays.length; i++ ){
+             
+            // Creating variables that hold the array of data from the filteredDays function above
+            let date = filteredDays[i].dt_txt.split(" ")[0];
+            let icon = filteredDays[i].weather[0].icon;
+            let humidity = filteredDays[i].main.humidity;
+            
+            // Creating and adding classes and attributes to HTML elements.
+            let square = $("<div>").attr("class","square");
+            let section = $("<section>").attr("class","content").attr("class", "col-sm-3");
+            let list = $("<ul>");
+            let listElDates = $("<li>").attr("class","dates").attr("class", "nowrap").text(date);
+            let listIcon = $("<ul>").append($("<img>").addClass("weatherImg").attr("src", "https://openweathermap.org/img/w/" + icon + ".png"));
+            let listElTempF = $("<li>").attr("class", "tempForecast").attr("class", "nowrap").text("Temp: " + tempT);
+            let listElHumidityF = $("<li>").attr("class", "hunidityForecast").attr("class", "nowrap").text("Humidity: " + humidity);
+           
+             // Declaring the function for F to C
+             let cTemp = fToC(filteredDays[i].main.temp);
+             let tempT = cTemp;
+
+            // Function to show Farenheit to Celcious
+            function fToC(fahrenheit) {
+                const fTemp = Math.round(fahrenheit);
+                const fToCel = Math.round((fTemp - 32) * 5 / 9);
+                const temp = `${fTemp}\xB0F : ${fToCel}\xB0C.`;
+                return temp;    
+            }
+
+            // Appending all html elements together to form the buttons with the forecast
+            square.append(section.append(list.append(listElDates,listIcon,listElTempF,listElHumidityF)))
+             $("#forecast").append(square)
+        }    
+    })
+};
+
+// First onload DOM
+searchCity(localStorage.getItem("cities").split(",")[localStorage.getItem("cities").split(",").length-1]);
+renderHistory();
+forecast(localStorage.getItem("cities").split(",")[localStorage.getItem("cities").split(",").length-1]);
+$('#wicon').attr('src', iconurl);
