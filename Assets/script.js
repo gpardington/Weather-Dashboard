@@ -35,7 +35,7 @@ function addHistory(city){
 function renderHistory(){
     $("#history").empty();
     for (i = 0; i < cities.length; i++) {
-        //    
+        
         $("#history").append($("<button class='btn btn-info d-flex flex-column'>").attr("cityName", cities[i]).text(cities[i]));
     }
     $("#history button").on("click",function(){
@@ -80,7 +80,7 @@ $.ajax({
     // Variables for ajax call for UV response
     let cityLat = response.coord.lat;
     let cityLon = response.coord.lon;
-    let uvURL = "https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/uvi?appid=" + "29d9121dacef0624c94a4b33f6e86502" + "&lat=" + cityLat + "&lon=" + cityLon + "&units=imperial";
+    let uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + "29d9121dacef0624c94a4b33f6e86502" + "&lat=" + cityLat + "&lon=" + cityLon + "&units=imperial";
     $.ajax({
         url: uvURL,
         method: "GET"
@@ -125,6 +125,7 @@ function forecast(city) {
         method: "GET"
         // forecastFunction
     }).then(function(forecastResponse){
+        console.log("Forecast Data: "+JSON.stringify(forecastResponse));        
         // Creating  a filter for the 5 days
         let filteredDays = forecastResponse.list.filter(
             function (currentElement){
@@ -134,10 +135,10 @@ function forecast(city) {
         //console.log(filteredDays)
         // Creating the HTML elements to display the forecast
         $("#forecast").empty();
-        for(let i = 0; i < filteredDays.length; i++ ){
+        for(let i = 0; i < forecastResponse.list.length; i+8 ){
              
             // Creating variables that hold the array of data from the filteredDays function above
-            let date = filteredDays[i].dt_txt.split(" ")[0];
+            let date = forecastResponse.list[i].dt_txt.split(" ")[0];
             let icon = filteredDays[i].weather[0].icon;
             let humidity = filteredDays[i].main.humidity;
             
@@ -148,7 +149,7 @@ function forecast(city) {
             let listElDates = $("<li>").attr("class","dates").attr("class", "nowrap").text(date);
             let listIcon = $("<ul>").append($("<img>").addClass("weatherImg").attr("src", "https://openweathermap.org/img/w/" + icon + ".png"));
             let listElTempF = $("<li>").attr("class", "tempForecast").attr("class", "nowrap").text("Temp: " + tempT);
-            let listElHumidityF = $("<li>").attr("class", "hunidityForecast").attr("class", "nowrap").text("Humidity: " + humidity);
+            let listElHumidityF = $("<li>").attr("class", "humidityForecast").attr("class", "nowrap").text("Humidity: " + humidity);
            
              // Declaring the function for F to C
              let cTemp = fToC(filteredDays[i].main.temp);
@@ -173,4 +174,3 @@ function forecast(city) {
 searchCity(localStorage.getItem("cities").split(",")[localStorage.getItem("cities").split(",").length-1]);
 renderHistory();
 forecast(localStorage.getItem("cities").split(",")[localStorage.getItem("cities").split(",").length-1]);
-$('#wicon').attr('src', iconurl);

@@ -14,11 +14,9 @@ h1 {
     text-align: center;
 }
 
-.header h3 {
+.header h4 {
     text-align: center;
-    padding-left: 50px;
-   
-/*might need some padding or margins here*/
+    padding-left: 30px;
 }
 
 #history {
