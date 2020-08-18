@@ -125,20 +125,39 @@ function forecast(city) {
         method: "GET"
         // forecastFunction
     }).then(function(forecastResponse){
-        console.log("Forecast Data: "+JSON.stringify(forecastResponse));        
+        console.log(forecastResponse);
+        //console.log("Forecast Data: "+JSON.stringify(forecastResponse));        
         // Creating  a filter for the 5 days
         let filteredDays = forecastResponse.list.filter(
             function (currentElement){
             return currentElement.dt_txt.includes("12:00:00")
             }	
         );
+
+
+            console.log(filteredDays);
+            //console.log(filteredDays[i].main);
+
         //console.log(filteredDays)
         // Creating the HTML elements to display the forecast
         $("#forecast").empty();
-        for(let i = 0; i < forecastResponse.list.length; i+8 ){
-             
+        for(let i = 0; i < filteredDays.length; i++ ){
+             console.log("in the for loop");
+
+            // Declaring the function for F to C
+            let cTemp = fToC(filteredDays[i].main.temp);
+            let tempT = cTemp;
+
+            // Function to show Farenheit to Celcious
+            function fToC(fahrenheit) {
+               const fTemp = Math.round(fahrenheit);
+               const fToCel = Math.round((fTemp - 32) * 5 / 9);
+               const temp = `${fTemp}\xB0F : ${fToCel}\xB0C.`;
+               return temp;    
+            }
+            
             // Creating variables that hold the array of data from the filteredDays function above
-            let date = forecastResponse.list[i].dt_txt.split(" ")[0];
+            let date = filteredDays[i].dt_txt.split(" ")[0];
             let icon = filteredDays[i].weather[0].icon;
             let humidity = filteredDays[i].main.humidity;
             
@@ -151,17 +170,7 @@ function forecast(city) {
             let listElTempF = $("<li>").attr("class", "tempForecast").attr("class", "nowrap").text("Temp: " + tempT);
             let listElHumidityF = $("<li>").attr("class", "humidityForecast").attr("class", "nowrap").text("Humidity: " + humidity);
            
-             // Declaring the function for F to C
-             let cTemp = fToC(filteredDays[i].main.temp);
-             let tempT = cTemp;
-
-            // Function to show Farenheit to Celcious
-            function fToC(fahrenheit) {
-                const fTemp = Math.round(fahrenheit);
-                const fToCel = Math.round((fTemp - 32) * 5 / 9);
-                const temp = `${fTemp}\xB0F : ${fToCel}\xB0C.`;
-                return temp;    
-            }
+             
 
             // Appending all html elements together to form the buttons with the forecast
             square.append(section.append(list.append(listElDates,listIcon,listElTempF,listElHumidityF)))
