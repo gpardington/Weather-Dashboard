@@ -52,15 +52,6 @@ function renderHistory(){
     });
 };
 
-//Trying to get temperature right. Had issues with my API
-// Function to show Kelvin to Fahrenheit
-//function kToF(kelvin) {
-    //const kTemp = Math.round(kelvin);
-    //const kelToF = Math.round((kTemp - 273.15) * 1.8) + 32;
-    //const temp = `${kTemp}\xB0F : ${kelToF}\xB0C.`;
-    //return temp;  
-//};
-
 // Function to show Farenheit to Celcious
 function fToC(fahrenheit) {
     const fTemp = Math.round(fahrenheit);
@@ -72,7 +63,7 @@ function fToC(fahrenheit) {
 function searchCity(city){
     
     $.ajax({
-        url: queryURL+city+APIkey,
+        url: queryURL+city+APIkey+"&units=imperial",
         method: "GET"
     }).then(function(response){
         // Setting variables for weather results 
@@ -132,7 +123,7 @@ function getUV(lat, lon) {
 function forecast(city) {
     // Section for the 5 day query
     $.ajax({
-        url: forecastURL+ city + APIkey,
+        url: forecastURL+ city + APIkey+"&units=imperial",
         method: "GET"
         // forecastFunction
     }).then(function(forecastResponse){       
